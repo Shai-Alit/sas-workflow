@@ -8,4 +8,4 @@ data = np.random.rand(20, 2)
 df = pd.DataFrame(data, columns=["first", "second"])
 
 # Display the DataFrame
-df.to_csv('../data/process_data.csv')
+df.to_csv('../data/process_data.csv',index=False)
