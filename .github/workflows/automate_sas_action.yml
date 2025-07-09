@@ -29,9 +29,15 @@ jobs:
       - name: Run shell script to create scripts
         run: ./generate_sh_scripts.sh
 
+      #setup python to match prod environment
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11.11
+
       # Runs python code
-      - name: Ruun python to generate data
-        run: ../python/generate_data.py
+      - name: Run python to generate data
+        run: python ../python/generate_data.py
 
       - name: add, commit, push
         env:
