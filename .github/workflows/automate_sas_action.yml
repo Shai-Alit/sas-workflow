@@ -1,0 +1,43 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build-automate-scripts:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./scripts
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Check out the repository to the runner
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Run shell script to create scripts
+        run: ./generate_sh_scripts.sh
+
+      - name: add, commit, push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "GitHub Actions bot"
+          git config user.email "<>"
+          git add --all
+          git commit -m "GitHub Actions commit automatically generated shell scripts."
+          git push
+        
