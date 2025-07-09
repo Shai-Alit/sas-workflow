@@ -1,3 +1,4 @@
+#!/bin/bash
 dtstamp=$(date +%Y.%m.%d_%H.%M.%S)
 pgmname='../code/temp1.sas'
 logname='../logs/temp1_$dtstamp.log'
