@@ -35,6 +35,8 @@ jobs:
         with:
           python-version: 3.11.11
 
+        run: pip install -r ../python/requirements.txt
+
       # Runs python code
       - name: Run python to generate data
         run: python ../python/generate_data.py
