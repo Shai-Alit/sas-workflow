@@ -39,7 +39,7 @@ find "$TARGET_DIR" -maxdepth 1 -type f -name "*.sas" | while read -r sas_file; d
     echo "SET \"pgmname=$sas_file\"" > "$bat_file"
     echo "SET \"logname=$LOG_DIR/$base_name.log\"" >> "$bat_file"
     echo "\"$SAS_DIR_WIN\sas.exe\""' %%pgmname%% -log %%logname%%' >> "$bat_file"
-    #chmod +x "$bat_file"
+    
     echo "Created: $bat_file at $dtstamp"
     
 done
