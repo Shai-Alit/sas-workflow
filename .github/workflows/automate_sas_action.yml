@@ -29,6 +29,10 @@ jobs:
       - name: Run shell script to create scripts
         run: ./generate_sh_scripts.sh
 
+      # Runs python code
+      - name: Ruun python to generate data
+        run: ../python/generate_data.py
+
       - name: add, commit, push
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

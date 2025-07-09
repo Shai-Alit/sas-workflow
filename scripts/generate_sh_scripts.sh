@@ -2,8 +2,8 @@
 #usage >./generate_sh_files.sh /path/to/sas/files
 #      second parameter is optional to output files to specific directory
 
+#date time stamp for log
 dtstamp=$(date +%Y.%m.%d_%H.%M.%S)
-#sas /sas/code/proj1/job1.sas -log /sas/code/proj1/job1.log
 
 # Set the target directory (ie, where the sas code lives)
 TARGET_DIR="../code"
@@ -26,12 +26,13 @@ find "$TARGET_DIR" -maxdepth 1 -type f -name "*.sas" | while read -r sas_file; d
     # Create the .sh file with the same base name
     sh_file="$DEST_DIR/$base_name.sh"
 
-    echo 'dtstamp=$(date +%Y.%m.%d_%H.%M.%S)' > "$sh_file"
+    echo '#!/bin/bash' > "$sh_file"
+    echo 'dtstamp=$(date +%Y.%m.%d_%H.%M.%S)' >> "$sh_file"
     echo "pgmname='$sas_file'" >> "$sh_file"
     echo "logname='$LOG_DIR/$base_name"'_$dtstamp.log'"'" >> "$sh_file"
     echo "$SAS_DIR"'/sas $pgmname -log $logname' >> "$sh_file"
     chmod +x "$sh_file"
-    echo "Created: $sh_file"
+    echo "Created: $sh_file at $dtstamp"
 
     bat_file="$DEST_DIR/$base_name.bat"
 
@@ -39,7 +40,7 @@ find "$TARGET_DIR" -maxdepth 1 -type f -name "*.sas" | while read -r sas_file; d
     echo "SET \"logname=$LOG_DIR/$base_name.log\"" >> "$bat_file"
     echo "\"$SAS_DIR_WIN\sas.exe\""' %%pgmname%% -log %%logname%%' >> "$bat_file"
     #chmod +x "$bat_file"
-    echo "Created: $bat_file"
+    echo "Created: $bat_file at $dtstamp"
     
 done
 
