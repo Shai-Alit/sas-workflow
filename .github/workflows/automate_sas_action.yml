@@ -25,10 +25,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run shell script to create scripts
-        run: ./generate_sh_scripts.sh
-
       #setup python to match prod environment
       - name: setup python
         uses: actions/setup-python@v5
@@ -37,10 +33,15 @@ jobs:
 
       - run: pip install -r ../python/requirements.txt
 
+      # Runs a single command using the runners shell
+      - name: Run shell script to create scripts
+        run: ./generate_sh_scripts.sh
+
       # Runs python code
       - name: Run python to generate data
         run: python ../python/generate_data.py
 
+      #add/commit/push back to repo
       - name: add, commit, push
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
